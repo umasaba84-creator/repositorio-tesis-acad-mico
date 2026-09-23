@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+<html lang="es" class="h-full bg-slate-50">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Repositorio de Tesis de Maestría | Geopolítica, Seguridad y Ciencias Sociales</title>
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        navy: {
+                            800: '#1E293B',
+                            900: '#0F172A',
+                        },
+                        amber: {
+                            600: '#D97706',
+                        },
+                        academic: {
+                            blue: '#2563EB',
+                            bg: '#F8FAFC'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        /* Custom scrollbar for clean UI */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+        /* Smooth transition for expandable abstracts */
+        .abstract-content {
+            transition: max-height 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+    </style>
+</head>
+<body class="font-sans antialiased text-slate-800 bg-slate-50 min-h-full flex flex-col">
+
+    <!-- Header Principal -->
+    <header class="bg-navy-900 text-white border-b border-slate-800 sticky top-0 z-30 shadow-md">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+            <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+                <div class="flex items-center space-x-3">
+                    <div class="p-2.5 bg-amber-600/20 border border-amber-600/30 rounded-xl text-amber-500">
+                        <i data-lucide="graduation-cap" class="w-8 h-8"></i>
+                    </div>
+                    <div>
+                        <div class="flex items-center space-x-2">
+                            <h1 class="text-xl md:text-2xl font-bold tracking-tight text-white">Repositorio de Tesis de Maestría</h1>
+                            <span class="bg-amber-600/20 text-amber-400 text-xs font-semibold px-2.5 py-0.5 rounded-full border border-amber-600/30">Posgrado</span>
+                        </div>
+                        <p class="text-xs md:text-sm text-slate-400 mt-0.5">Plataforma Académica de Seguridad, Geopolítica, Prospectiva y Ciencias Sociales</p>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-3 text-xs md:text-sm text-slate-300">
+                    <span class="flex items-center gap-1.5 bg-slate-800/80 px-3 py-1.5 rounded-lg border border-slate-700">
+                        <i data-lucide="shield-check" class="w-4 h-4 text-emerald-400"></i> Repositorio Verificado
+                    </span>
+                    <span class="flex items-center gap-1.5 bg-slate-800/80 px-3 py-1.5 rounded-lg border border-slate-700">
+                        <i data-lucide="book-open" class="w-4 h-4 text-blue-400"></i> Acceso Abierto
+                    </span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Seccion de Busqueda y Filtros -->
+    <section class="bg-navy-800 text-white py-8 border-b border-slate-700 shadow-inner">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="space-y-4">
+                <!-- Barra de búsqueda de texto completo -->
+                <div class="relative">
+                    <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-400">
+                        <i data-lucide="search" class="w-5 h-5"></i>
+                    </div>
+                    <input type="text" id="searchInput" 
+                        class="w-full pl-11 pr-10 py-3.5 bg-slate-900/90 border border-slate-700 rounded-xl text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-academic-blue focus:border-transparent text-sm md:text-base transition-all shadow-lg"
+                        placeholder="Buscar por título, autor, palabras clave o extracto del resumen...">
+                    <button id="clearSearchBtn" class="hidden absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400 hover:text-white">
+                        <i data-lucide="x-circle" class="w-5 h-5"></i>
+                    </button>
+                </div>
+
+                <!-- Filtros Grid -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 pt-2">
+                    <!-- Categoria / Tema -->
+                    <div>
+                        <label for="categoryFilter" class="block text-xs font-medium text-slate-300 mb-1 flex items-center gap-1">
+                            <i data-lucide="filter" class="w-3.5 h-3.5"></i> Áreas Temáticas
+                        </label>
+                        <select id="categoryFilter" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-slate-200 focus:outline-none focus:ring-2 focus:ring-academic-blue">
+                            <option value="ALL">Todas las Áreas</option>
+                            <option value="Geopolítica">Geopolítica</option>
+                            <option value="Economía y Finanzas">Economía y Finanzas</option>
+                            <option value="Ciencia Política">Ciencia Política</option>
+                            <option value="Ciberseguridad">Ciberseguridad</option>
+                            <option value="Prospectiva y Estrategia">Prospectiva y Estrategia</option>
+                            <option value="Seguridad Nacional y Humana">Seguridad Nacional y Humana</option>
+                        </select>
+                    </div>
+
+                    <!-- Filtro por Año -->
+                    <div>
+                        <label for="yearFilter" class="block text-xs font-medium text-slate-300 mb-1 flex items-center gap-1">
+                            <i data-lucide="calendar" class="w-3.5 h-3.5"></i> Año de Publicación
+                        </label>
+                        <select id="yearFilter" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-slate-200 focus:outline-none focus:ring-2 focus:ring-academic-blue">
+                            <option value="ALL">Todos los Años (2018 - 2026)</option>
+                            <option value="2026">2026</option>
+                            <option value="2025">2025</option>
+                            <option value="2024">2024</option>
+                            <option value="2023">2023</option>
+                            <option value="2022">2022</option>
+                            <option value="2021">2021</option>
+                            <option value="2020">2020</option>
+                            <option value="2019">2019</option>
+                            <option value="2018">2018</option>
+                        </select>
+                    </div>
+
+                    <!-- Ordenar resultados -->
+                    <div>
+                        <label for="sortOrder" class="block text-xs font-medium text-slate-300 mb-1 flex items-center gap-1">
+                            <i data-lucide="arrow-up-down" class="w-3.5 h-3.5"></i> Ordenar Por
+                        </label>
+                        <select id="sortOrder" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-slate-200 focus:outline-none focus:ring-2 focus:ring-academic-blue">
+                            <option value="recent">Más recientes primero</option>
+                            <option value="oldest">Más antiguos primero</option>
+                            <option value="titleAsc">Título (A-Z)</option>
+                            <option value="relevance">Relevancia temática</option>
+                        </select>
+                    </div>
+
+                    <!-- Botón Restablecer -->
+                    <div class="flex items-end">
+                        <button id="resetFiltersBtn" class="w-full bg-slate-700 hover:bg-slate-600 text-slate-200 hover:text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors flex items-center justify-center gap-2 border border-slate-600">
+                            <i data-lucide="rotate-ccw" class="w-4 h-4"></i> Limpiar Filtros
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contenido Principal: Grid Layout con Sidebar y Lista de Tesis -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-grow w-full">
+        <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
+            
+            <!-- Sidebar: Panel de Estadísticas y Etiquetas Rápidas -->
+            <aside class="lg:col-span-1 space-y-6">
+                <!-- Tarjeta de Estadísticas -->
+                <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm space-y-4">
+                    <h2 class="text-sm font-bold text-slate-900 uppercase tracking-wider flex items-center gap-2 pb-3 border-b border-slate-100">
+                        <i data-lucide="bar-chart-2" class="w-4 h-4 text-academic-blue"></i> Métrica del Repositorio
+                    </h2>
+                    
+                    <div class="grid grid-cols-2 lg:grid-cols-1 gap-3">
+                        <div class="bg-slate-50 p-3 rounded-lg border border-slate-100">
+                            <span class="text-xs text-slate-500 font-medium">Total Registradas</span>
+                            <div class="text-2xl font-extrabold text-navy-900 mt-1" id="statTotalCount">0</div>
+                        </div>
+                        <div class="bg-blue-50/50 p-3 rounded-lg border border-blue-100">
+                            <span class="text-xs text-academic-blue font-medium">Resultados Filtrados</span>
+                            <div class="text-2xl font-extrabold text-academic-blue mt-1" id="statFilteredCount">0</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Filtro Rápido por Etiquetas Popular/Temas -->
+                <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm space-y-3">
+                    <h2 class="text-sm font-bold text-slate-900 uppercase tracking-wider flex items-center gap-2 pb-2 border-b border-slate-100">
+                        <i data-lucide="tags" class="w-4 h-4 text-amber-600"></i> Categorías Destacadas
+                    </h2>
+                    <p class="text-xs text-slate-500">Haz clic en una etiqueta para aplicar un filtro instantáneo:</p>
+                    <div class="flex flex-wrap gap-2 pt-1" id="quickTagsContainer">
+                        <!-- Generado por JS -->
+                    </div>
+                </div>
+
+                <!-- Info Box Académico -->
+                <div class="bg-gradient-to-br from-navy-900 to-slate-800 text-white p-5 rounded-xl shadow-sm space-y-3">
+                    <div class="flex items-center gap-2 text-amber-400 font-semibold text-xs tracking-wide uppercase">
+                        <i data-lucide="award" class="w-4 h-4"></i> Normativa Institucional
+                    </div>
+                    <p class="text-xs text-slate-300 leading-relaxed">
+                        Todas las tesis almacenadas han sido evaluadas por comités académicos de maestría y cuentan con registro formal de grado y derechos de autor bajo licencias Creative Commons.
+                    </p>
+                </div>
+            </aside>
+
+            <!-- Área Principal de Resultados -->
+            <section class="lg:col-span-3 space-y-6">
+                <!-- Barra superior de resultados -->
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+                    <div class="flex items-center space-x-2">
+                        <span class="text-slate-600 text-sm font-medium">Mostrando:</span>
+                        <span id="resultsCounter" class="bg-slate-100 text-slate-800 text-sm font-bold px-3 py-0.5 rounded-full border border-slate-200">
+                            Cargando tesis...
+                        </span>
+                    </div>
+                    <div class="text-xs text-slate-500 flex items-center gap-1">
+                        <i data-lucide="info" class="w-3.5 h-3.5"></i> Citas en formato APA 7 actualizadas
+                    </div>
+                </div>
+
+                <!-- Contenedor de Lista de Tarjetas de Tesis -->
+                <div id="thesisList" class="space-y-5">
+                    <!-- Se llena dinámicamente con JS -->
+                </div>
+
+                <!-- Estado Vacío (Empty State) -->
+                <div id="emptyState" class="hidden bg-white p-12 text-center rounded-xl border border-slate-200 shadow-sm space-y-4">
+                    <div class="w-16 h-16 mx-auto bg-slate-100 text-slate-400 rounded-full flex items-center justify-center">
+                        <i data-lucide="file-search" class="w-8 h-8"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-slate-800">No se encontraron tesis</h3>
+                    <p class="text-slate-500 text-sm max-w-md mx-auto">
+                        No encontramos resultados que coincidan con los criterios de búsqueda o filtros seleccionados. Intenta ajustar el término o limpiar las opciones.
+                    </p>
+                    <button id="resetFromEmptyBtn" class="inline-flex items-center gap-2 px-4 py-2 bg-academic-blue hover:bg-blue-700 text-white text-sm font-medium rounded-lg transition-colors shadow-sm">
+                        <i data-lucide="rotate-ccw" class="w-4 h-4"></i> Restablecer Filtros
+                    </button>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-navy-900 text-slate-400 text-xs border-t border-slate-800 mt-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div>
+                    <div class="flex items-center space-x-2 text-white font-bold text-sm mb-2">
+                        <i data-lucide="graduation-cap" class="w-4 h-4 text-amber-500"></i>
+                        <span>Repositorio Abierto de Posgrado</span>
+                    </div>
+                    <p class="text-slate-400 leading-relaxed">
+                        Sistema integral para la divulgación científica y consulta de investigaciones de maestría en ciencias sociales, política internacional y estudios de defensa.
+                    </p>
+                </div>
+                <div>
+                    <h3 class="text-white font-semibold mb-2">Especialidades Cubiertas</h3>
+                    <ul class="space-y-1">
+                        <li>• Geopolítica y Relaciones Internacionales</li>
+                        <li>• Ciberdefensa y Ciberseguridad Estratégica</li>
+                        <li>• Economías Emergentes y Finanzas Digitales</li>
+                        <li>• Prospectiva Política y Seguridad Humana</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-white font-semibold mb-2">Aviso Legal y Citas</h3>
+                    <p class="text-slate-400 leading-relaxed">
+                        Las citas bibliográficas generadas cumplen estrictamente con la 7ma edición de la Guía APA. El contenido digital está sujeto a las licencias de cada institución académica participante.
+                    </p>
+                </div>
+            </div>
+            <div class="mt-8 pt-6 border-t border-slate-800 text-center flex flex-col sm:flex-row justify-between items-center gap-2">
+                <p>&copy; 2026 Repositorio Académico de Tesis de Maestría. Todos los derechos reservados.</p>
+                <div class="flex space-x-4">
+                    <a href="#" class="hover:text-white transition-colors">Términos de Uso</a>
+                    <a href="#" class="hover:text-white transition-colors">Contacto Académico</a>
+                    <a href="#" class="hover:text-white transition-colors">Política de Privacidad</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Toast Notification Float -->
+    <div id="toast" class="fixed bottom-5 right-5 transform translate-y-20 opacity-0 transition-all duration-300 z-50 bg-slate-900 text-white px-4 py-3 rounded-xl shadow-2xl border border-slate-700 flex items-center space-x-3 pointer-events-none">
+        <div class="p-1 bg-emerald-500/20 text-emerald-400 rounded-lg">
+            <i data-lucide="check-circle-2" class="w-5 h-5"></i>
+        </div>
+        <div>
+            <div id="toastTitle" class="text-xs font-bold text-white">¡Cita Copiada!</div>
+            <div id="toastMessage" class="text-xs text-slate-300">Referencia guardada en formato APA 7.</div>
+        </div>
+    </div>
+
+    <!-- Scripts & Lógica JS -->
+    <script>
+        // Data de Prueba (Mock Data) con Tesis Académicas
+        const THESIS_DATABASE = [
+            {
+                id: "T-2026-001",
+                title: "Geopolítica del agua en América Latina: Análisis de cuencas transfronterizas y seguridad hídrica regional",
+                author: "Mendoza Silva, Sofía Valentina",
+                advisor: "Dr. Alejandro Ramírez Krauss",
+                institution: "Instituto de Altos Estudios Internacionales y Gobernanza",
+                degree: "Maestría en Geopolítica y Relaciones Internacionales",
+                year: 2026,
+                category: "Geopolítica",
+                tags: ["Geopolítica", "Seguridad Hídrica", "Recursos Naturales", "Cuencas Transfronterizas"],
+                abstract: "Esta investigación examina la transformación geopolítica de la gestión del agua dulce en la Cuenca del Plata y el Gran Chaco. Se analiza el potencial de conflictividad y cooperación en el marco del cambio climático acelerado durante el período 2020-2025. Utilizando una metodología mixta de escenarios prospectivos y análisis espacial, se proponen mecanismos institucionales para prevenir tensiones bilaterales y resguardar la soberanía hídrica de los Estados parte.",
+                doiUrl: "https://repositorio.academico.org/thesis/2026/mendoza-agua-geopolitica"
+            },
+            {
+                id: "T-2025-002",
+                title: "Impacto económico e institucional de las monedas digitales de bancos centrales (CBDC) en la estabilidad financiera global",
+                author: "Navarro Benítez, Carlos Eduardo",
+                advisor: "Dra. Beatriz Elena Morales",
+                institution: "Universidad Nacional de Ciencias Económicas y Políticas",
+                degree: "Maestría en Economía Política Internacional",
+                year: 2025,
+                category: "Economía y Finanzas",
+                tags: ["CBDC", "Economía y Finanzas", "Sistemas de Pago", "Política Monetaria"],
+                abstract: "El presente estudio analiza la proliferación de las Monedas Digitales de Bancos Centrales (CBDC) y su reestructuración de los flujos de capitales transfronterizos. A través de modelos econométricos aplicados a economías emergentes, la tesis evalúa la desdolarización progresiva y los riesgos de desintermediación bancaria, proponiendo una hoja de ruta para la convergencia normativa entre bancos centrales.",
+                doiUrl: "https://repositorio.academico.org/thesis/2025/navarro-cbdc-impacto"
+            },
+            {
+                id: "T-2025-003",
+                title: "Ciberseguridad en infraestructuras críticas nacionales: Marco estratégico para la defensa digital y resiliencia estatal",
+                author: "Ríos Valenzuela, Gabriel Andrés",
+                advisor: "MSc. Roberto Thorne Valls",
+                institution: "Academia Superior de Guerra y Estudios Estratégicos",
+                degree: "Maestría en Ciberseguridad y Ciberdefensa",
+                year: 2025,
+                category: "Ciberseguridad",
+                tags: ["Ciberseguridad", "Infraestructura Crítica", "Ciberdefensa", "Seguridad Nacional"],
+                abstract: "Investigación orientada a proponer una Estrategia Nacional de Ciberresiliencia dirigida a redes SCADA y sistemas de energía de alta tensión. Evalúa el catálogo de vulnerabilidades tras la ola de ciberataques asimétricos entre 2022 y 2024. Aporta un marco operativo para la articulación público-privada en la detección temprana de ransomware patrocinado por actores estatales.",
+                doiUrl: "https://repositorio.academico.org/thesis/2025/rios-ciberseguridad-infraestructura"
+            },
+            {
+                id: "T-2024-004",
+                title: "Prospectiva sobre inteligencia artificial y gobernanza global al año 2035: Riesgos éticos y del equilibrio de poder",
+                author: "Guerrero Ortega, María Camila",
+                advisor: "Dr. Fernando Delgado Pineda",
+                institution: "Universidad de Estudios Estratégicos y Prospectiva",
+                degree: "Maestría en Prospectiva y Estudios del Futuro",
+                year: 2024,
+                category: "Prospectiva y Estrategia",
+                tags: ["Prospectiva y Estrategia", "Inteligencia Artificial", "Gobernanza Global", "Tecnopolítica"],
+                abstract: "A través del método Delphi de tres rondas con expertos internacionales en tecnología y diplomacia, este trabajo proyecta cuatro escenarios alternativos de gobernanza de la Inteligencia Artificial General hacia el 2035. La investigación enfatiza la urgencia de tratados multilaterales vinculantes para la regulación de armas autónomas y algoritmos de vigilancia masiva.",
+                doiUrl: "https://repositorio.academico.org/thesis/2024/guerrero-prospectiva-ia"
+            },
+            {
+                id: "T-2024-005",
+                title: "Análisis político de la cooperación regional en defensa y gestión de crisis en la Comunidad Andina",
+                author: "Zapata Paredes, Jorge Luis",
+                advisor: "Dra. Isabel Cristina Restrepo",
+                institution: "Facultad Latinoamericana de Ciencias Sociales",
+                degree: "Maestría en Ciencia Política y Relaciones Internacionales",
+                year: 2024,
+                category: "Ciencia Política",
+                tags: ["Ciencia Política", "Cooperación Regional", "Defensa", "Gestión de Crisis"],
+                abstract: "La tesis evalúa el nivel de integración institucional de los ministerios de defensa andinos ante crisis de seguridad multidimensionales. Analiza los cuellos de botella normativos e ideológicos que han dificultado la interoperabilidad de las fuerzas armadas en tareas de respuesta a desastres naturales y combate al crimen organizado transnacional.",
+                doiUrl: "https://repositorio.academico.org/thesis/2024/zapata-cooperacion-defensa"
+            },
+            {
+                id: "T-2023-006",
+                title: "Seguridad humana y cambio climático en zonas vulnerables de Centroamérica: Migración forzada y resiliencia comunitaria",
+                author: "Castillo Fuentes, Ana Lucía",
+                advisor: "Dr. Gustavo Adolfo Pacheco",
+                institution: "Centro de Investigaciones en Humanidades y Desarrollo",
+                degree: "Maestría en Seguridad Humana y Desarrollo Sostenible",
+                year: 2023,
+                category: "Seguridad Nacional y Humana",
+                tags: ["Seguridad Nacional y Humana", "Cambio Climático", "Migración", "Centroamérica"],
+                abstract: "Este estudio cuantitativo-cualitativo aborda el impacto de los eventos meteorológicos extremos sobre la seguridad alimentaria e hídrica en el Corredor Seco Centroamericano. Postula que el cambio climático actúa como un multiplicador de amenazas que desencadena desplazamiento interno y migraciones transnacionales, demandando un enfoque de seguridad centrada en las personas.",
+                doiUrl: "https://repositorio.academico.org/thesis/2023/castillo-seguridad-humana"
+            },
+            {
+                id: "T-2023-007",
+                title: "La ciberdiplomacia y el conflicto asimétrico en la era digital: Normas internacionales y conducta estatal",
+                author: "Peralta Gómez, Diego Armando",
+                advisor: "Dra. Mariana Sotomayor",
+                institution: "Escuela Diplomática Internacional",
+                degree: "Maestría en Diplomacia y Asuntos Internacionales",
+                year: 2023,
+                category: "Ciberseguridad",
+                tags: ["Ciberseguridad", "Ciberdiplomacia", "Derecho Internacional", "Guerra Asimétrica"],
+                abstract: "Analiza el desarrollo de las normas de conducta responsable de los Estados en el ciberespacio promovidas por Naciones Unidas. El estudio contrasta los esfuerzos diplomáticos normativos con la ocurrencia de operaciones cibernéticas encubiertas por debajo del umbral del conflicto armado formal.",
+                doiUrl: "https://repositorio.academico.org/thesis/2023/peralta-ciberdiplomacia"
+            },
+            {
+                id: "T-2022-008",
+                title: "Estrategias de inteligencia prospectiva para la prevención de amenazas híbridas en entornos urbanos",
+                author: "Santamaría Ruiz, Fernando Javier",
+                advisor: "MSc. Héctor Fabio Corrales",
+                institution: "Instituto de Altos Estudios de Defensa Nacional",
+                degree: "Maestría en Inteligencia y Estrategia Militar",
+                year: 2022,
+                category: "Prospectiva y Estrategia",
+                tags: ["Prospectiva y Estrategia", "Amenazas Híbridas", "Inteligencia", "Seguridad Urbana"],
+                abstract: "Propone un modelo operativo de 'Inteligencia Anticipatoria' para identificar operaciones de desinformación, guerra psicológica y sabotaje infraestructural en grandes metrópolis. Aporta un marco conceptual para coordinar las agencias de inteligencia civil con las fuerzas operativas de defensa.",
+                doiUrl: "https://repositorio.academico.org/thesis/2022/santamaria-inteligencia-hibrida"
+            },
+            {
+                id: "T-2021-009",
+                title: "Geopolítica de los recursos estratégicos y la transición energética regional: El triángulo del litio",
+                author: "Villalba Cardona, Daniela Andrea",
+                advisor: "Dr. Víctor Hugo Quiroga",
+                institution: "Universidad Interamericana de Desarrollo y Geopolítica",
+                degree: "Maestría en Geopolítica y Recursos Estratégicos",
+                year: 2021,
+                category: "Geopolítica",
+                tags: ["Geopolítica", "Recursos Estratégicos", "Litio", "Transición Energética"],
+                abstract: "Evaluación del peso diplomático y comercial de Argentina, Bolivia y Chile en la cadena global de valor de las baterías de iones de litio. Revisa la competencia entre potencias globales (EE. UU., China y la Unión Europea) por asegurar el suministro de minerales críticos para la electrificación energética.",
+                doiUrl: "https://repositorio.academico.org/thesis/2021/villalba-litio-geopolitica"
+            },
+            {
+                id: "T-2020-010",
+                title: "Políticas públicas y resiliencia institucional ante ataques cibernéticos a redes eléctricas de distribución",
+                author: "Henao Marín, Mateo Alejandro",
+                advisor: "Dra. Patricia Jaramillo Arango",
+                institution: "Escuela de Gobierno y Políticas Públicas",
+                degree: "Maestría en Políticas Públicas y Ciberseguridad",
+                year: 2020,
+                category: "Economía y Finanzas",
+                tags: ["Economía y Finanzas", "Ciberseguridad", "Políticas Públicas", "Energía"],
+                abstract: "Estudio comparativo sobre los marcos regulatorios de seguridad en el sector energético en tres países de la región. Muestra las pérdidas económicas directas e indirectas que causa la interrupción de la red eléctrica por ciberataques y diseña recomendaciones para incentivos fiscales en ciberdefensa industrial.",
+                doiUrl: "https://repositorio.academico.org/thesis/2020/henao-redes-electricas"
+            }
+        ];
+
+        // Estado Global de la Aplicación
+        let currentFilteredData = [...THESIS_DATABASE];
+        let activeTagFilter = null;
+
+        // Elementos DOM
+        const searchInput = document.getElementById('searchInput');
+        const clearSearchBtn = document.getElementById('clearSearchBtn');
+        const categoryFilter = document.getElementById('categoryFilter');
+        const yearFilter = document.getElementById('yearFilter');
+        const sortOrder = document.getElementById('sortOrder');
+        const resetFiltersBtn = document.getElementById('resetFiltersBtn');
+        const resetFromEmptyBtn = document.getElementById('resetFromEmptyBtn');
+        
+        const thesisList = document.getElementById('thesisList');
+        const emptyState = document.getElementById('emptyState');
+        const resultsCounter = document.getElementById('resultsCounter');
+        const statTotalCount = document.getElementById('statTotalCount');
+        const statFilteredCount = document.getElementById('statFilteredCount');
+        const quickTagsContainer = document.getElementById('quickTagsContainer');
+
+        // Inicialización
+        window.addEventListener('DOMContentLoaded', () => {
+            statTotalCount.textContent = THESIS_DATABASE.length;
+            renderQuickTags();
+            applyFilters();
+            
+            // Event Listeners
+            searchInput.addEventListener('input', handleSearchInput);
+            clearSearchBtn.addEventListener('click', clearSearch);
+            categoryFilter.addEventListener('change', applyFilters);
+            yearFilter.addEventListener('change', applyFilters);
+            sortOrder.addEventListener('change', applyFilters);
+            resetFiltersBtn.addEventListener('click', resetAllFilters);
+            resetFromEmptyBtn.addEventListener('click', resetAllFilters);
+        });
+
+        // Mostrar u Ocultar Botón X de la Búsqueda
+        function handleSearchInput() {
+            if (searchInput.value.trim().length > 0) {
+                clearSearchBtn.classList.remove('hidden');
+            } else {
+                clearSearchBtn.classList.add('hidden');
+            }
+            applyFilters();
+        }
+
+        function clearSearch() {
+            searchInput.value = '';
+            clearSearchBtn.classList.add('hidden');
+            applyFilters();
+        }
+
+        // Renderizar Etiquetas Rápidas en el Sidebar
+        function renderQuickTags() {
+            const categories = ["Geopolítica", "Ciberseguridad", "Economía y Finanzas", "Prospectiva y Estrategia", "Seguridad Nacional y Humana"];
+            quickTagsContainer.innerHTML = '';
+
+            categories.forEach(cat => {
+                const badge = document.createElement('button');
+                badge.className = `text-xs px-2.5 py-1 rounded-full font-medium transition-all duration-200 border border-slate-200 hover:border-academic-blue hover:text-academic-blue ${activeTagFilter === cat ? 'bg-academic-blue text-white hover:text-white border-academic-blue' : 'bg-slate-100 text-slate-700'}`;
+                badge.textContent = cat;
+                badge.onclick = () => toggleQuickTag(cat);
+                quickTagsContainer.appendChild(badge);
+            });
+        }
+
+        function toggleQuickTag(categoryName) {
+            if (activeTagFilter === categoryName) {
+                activeTagFilter = null;
+                categoryFilter.value = 'ALL';
+            } else {
+                activeTagFilter = categoryName;
+                categoryFilter.value = categoryName;
+            }
+            renderQuickTags();
+            applyFilters();
+        }
+
+        // Aplicar Filtros Combinados (Texto, Categoría, Año, Ordenación)
+        function applyFilters() {
+            const query = searchInput.value.toLowerCase().trim();
+            const selectedCategory = categoryFilter.value;
+            const selectedYear = yearFilter.value;
+            const selectedSort = sortOrder.value;
+
+            // Sincronizar etiqueta activa si el selector cambia independientemente
+            if (selectedCategory !== activeTagFilter) {
+                activeTagFilter = selectedCategory === 'ALL' ? null : selectedCategory;
+                renderQuickTags();
+            }
+
+            // Filtrado Principal
+            currentFilteredData = THESIS_DATABASE.filter(item => {
+                // Coincidencia de texto
+                const matchesSearch = !query || 
+                    item.title.toLowerCase().includes(query) ||
+                    item.author.toLowerCase().includes(query) ||
+                    item.advisor.toLowerCase().includes(query) ||
+                    item.abstract.toLowerCase().includes(query) ||
+                    item.tags.some(tag => tag.toLowerCase().includes(query));
+
+                // Coincidencia de categoría
+                const matchesCategory = selectedCategory === 'ALL' || item.category === selectedCategory;
+
+                // Coincidencia de año
+                const matchesYear = selectedYear === 'ALL' || item.year.toString() === selectedYear;
+
+                return matchesSearch && matchesCategory && matchesYear;
+            });
+
+            // Ordenación
+            sortData(selectedSort);
+
+            // Actualizar Métricas y Vista
+            updateUI();
+        }
+
+        // Ordenar Arreglo Filtrado
+        function sortData(criteria) {
+            switch (criteria) {
+                case 'recent':
+                    currentFilteredData.sort((a, b) => b.year - a.year);
+                    break;
+                case 'oldest':
+                    currentFilteredData.sort((a, b) => a.year - b.year);
+                    break;
+                case 'titleAsc':
+                    currentFilteredData.sort((a, b) => a.title.localeCompare(b.title));
+                    break;
+                case 'relevance':
+                    // Mantener el orden original o por matches
+                    currentFilteredData.sort((a, b) => a.id.localeCompare(b.id));
+                    break;
+            }
+        }
+
+        // Restablecer Todos los Filtros
+        function resetAllFilters() {
+            searchInput.value = '';
+            clearSearchBtn.classList.add('hidden');
+            categoryFilter.value = 'ALL';
+            yearFilter.value = 'ALL';
+            sortOrder.value = 'recent';
+            activeTagFilter = null;
+            renderQuickTags();
+            applyFilters();
+        }
+
+        // Actualizar la Interfaz de Usuario
+        function updateUI() {
+            statFilteredCount.textContent = currentFilteredData.length;
+            resultsCounter.textContent = `${currentFilteredData.length} ${currentFilteredData.length === 1 ? 'tesis encontrada' : 'tesis encontradas'}`;
+
+            if (currentFilteredData.length === 0) {
+                thesisList.innerHTML = '';
+                emptyState.classList.remove('hidden');
+            } else {
+                emptyState.classList.add('hidden');
+                renderThesisCards(currentFilteredData);
+            }
+            
+            // Re-inicializar íconos Lucide cargados dinámicamente
+            if (window.lucide) {
+                lucide.createIcons();
+            }
+        }
+
+        // Renderizar Tarjetas de Tesis
+        function renderThesisCards(data) {
+            thesisList.innerHTML = data.map(thesis => {
+                const apaCitation = generateAPACitation(thesis);
+                
+                return `
+                <article class="bg-white border border-slate-200 rounded-xl p-5 md:p-6 shadow-sm hover:shadow-md transition-shadow duration-200 space-y-4">
+                    <!-- Fila Superior: Badges y Año -->
+                    <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-100 pb-3">
+                        <div class="flex flex-wrap items-center gap-2">
+                            <span class="bg-navy-900 text-white text-xs px-2.5 py-0.5 rounded-md font-medium flex items-center gap-1">
+                                <i data-lucide="bookmark" class="w-3 h-3 text-amber-500"></i> ${thesis.category}
+                            </span>
+                            <span class="bg-slate-100 text-slate-700 text-xs px-2.5 py-0.5 rounded-md font-medium border border-slate-200">
+                                ${thesis.degree}
+                            </span>
+                        </div>
+                        <span class="text-xs font-semibold text-slate-500 bg-slate-50 px-2.5 py-1 rounded-lg border border-slate-200 flex items-center gap-1">
+                            <i data-lucide="calendar" class="w-3.5 h-3.5 text-slate-400"></i> ${thesis.year}
+                        </span>
+                    </div>
+
+                    <!-- Título -->
+                    <h3 class="text-base md:text-lg font-bold text-slate-900 hover:text-academic-blue transition-colors leading-snug">
+                        ${thesis.title}
+                    </h3>
+
+                    <!-- Detalles del Autor e Institución -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs md:text-sm text-slate-600 bg-slate-50/70 p-3 rounded-lg border border-slate-100">
+                        <div class="flex items-start gap-1.5">
+                            <i data-lucide="user" class="w-4 h-4 text-academic-blue mt-0.5 shrink-0"></i>
+                            <div>
+                                <span class="font-semibold text-slate-800">Autor(a):</span> ${thesis.author}
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-1.5">
+                            <i data-lucide="user-check" class="w-4 h-4 text-emerald-600 mt-0.5 shrink-0"></i>
+                            <div>
+                                <span class="font-semibold text-slate-800">Asesor:</span> ${thesis.advisor}
+                            </div>
+                        </div>
+                        <div class="col-span-1 sm:col-span-2 flex items-start gap-1.5 pt-1 border-t border-slate-200/60 mt-1">
+                            <i data-lucide="building" class="w-4 h-4 text-slate-400 mt-0.5 shrink-0"></i>
+                            <div>
+                                <span class="font-semibold text-slate-800">Institución:</span> ${thesis.institution}
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Badges de Etiquetas Temáticas -->
+                    <div class="flex flex-wrap gap-1.5">
+                        ${thesis.tags.map(tag => `
+                            <span class="text-[11px] bg-blue-50 text-academic-blue px-2 py-0.5 rounded border border-blue-100">
+                                #${tag}
+                            </span>
+                        `).join('')}
+                    </div>
+
+                    <!-- Resumen Colapsable -->
+                    <div class="pt-2">
+                        <button onclick="toggleAbstract('${thesis.id}')" id="btn-abstract-${thesis.id}" class="text-xs font-semibold text-academic-blue hover:text-blue-800 flex items-center gap-1 focus:outline-none">
+                            <span id="btn-text-${thesis.id}">Ver resumen ejecutivo</span>
+                            <i data-lucide="chevron-down" id="icon-abstract-${thesis.id}" class="w-4 h-4 transition-transform duration-200"></i>
+                        </button>
+                        
+                        <div id="abstract-${thesis.id}" class="hidden mt-2 p-4 bg-slate-50 border-l-4 border-academic-blue rounded-r-lg text-xs md:text-sm text-slate-700 leading-relaxed space-y-1">
+                            <strong class="block text-slate-900 font-semibold mb-1">Resumen / Abstract:</strong>
+                            <p>${thesis.abstract}</p>
+                        </div>
+                    </div>
+
+                    <!-- Botones de Acción -->
+                    <div class="flex flex-col sm:flex-row items-center justify-between gap-3 pt-3 border-t border-slate-100">
+                        <div class="flex items-center gap-2 w-full sm:w-auto">
+                            <!-- Botón Copiar Cita APA -->
+                            <button onclick="copyCitation('${thesis.id}')" class="w-full sm:w-auto px-3.5 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 hover:text-slate-900 text-xs font-semibold rounded-lg transition-colors flex items-center justify-center gap-1.5 border border-slate-200">
+                                <i data-lucide="copy" class="w-3.5 h-3.5"></i> Copiar Cita (APA 7)
+                            </button>
+                        </div>
+
+                        <!-- Botón Enlace a PDF/Repositorio -->
+                        <a href="${thesis.doiUrl}" target="_blank" rel="noopener noreferrer" class="w-full sm:w-auto px-4 py-2 bg-navy-900 hover:bg-navy-800 text-white text-xs font-semibold rounded-lg transition-colors flex items-center justify-center gap-2 shadow-sm">
+                            <i data-lucide="external-link" class="w-3.5 h-3.5 text-amber-500"></i> Repositorio Completo (PDF)
+                        </a>
+                    </div>
+                </article>
+                `;
+            }).join('');
+        }
+
+        // Alternar Visibilidad del Resumen
+        function toggleAbstract(id) {
+            const abstractDiv = document.getElementById(`abstract-${id}`);
+            const icon = document.getElementById(`icon-abstract-${id}`);
+            const btnText = document.getElementById(`btn-text-${id}`);
+
+            if (abstractDiv.classList.contains('hidden')) {
+                abstractDiv.classList.remove('hidden');
+                icon.style.transform = 'rotate(180deg)';
+                btnText.textContent = 'Ocultar resumen';
+            } else {
+                abstractDiv.classList.add('hidden');
+                icon.style.transform = 'rotate(0deg)';
+                btnText.textContent = 'Ver resumen ejecutivo';
+            }
+        }
+
+        // Generador de Citas APA 7
+        function generateAPACitation(thesis) {
+            // Formatear autor para APA 7 (Ej: Mendoza Silva, S. V.)
+            const authorParts = thesis.author.split(',');
+            let formattedAuthor = thesis.author;
+            
+            if (authorParts.length === 2) {
+                const surnames = authorParts[0].trim();
+                const names = authorParts[1].trim().split(' ').map(n => `${n.charAt(0)}.`).join(' ');
+                formattedAuthor = `${surnames}, ${names}`;
+            }
+
+            return `${formattedAuthor} (${thesis.year}). ${thesis.title} [${thesis.degree}, ${thesis.institution}]. Repositorio Institucional de Posgrado. ${thesis.doiUrl}`;
+        }
+
+        // Copiar Cita APA 7 al Portapapeles con Notificación Toast
+        function copyCitation(id) {
+            const thesis = THESIS_DATABASE.find(t => t.id === id);
+            if (!thesis) return;
+
+            const citationText = generateAPACitation(thesis);
+
+            // Usar execCommand fallback para máxima compatibilidad iframe
+            const textArea = document.createElement("textarea");
+            textArea.value = citationText;
+            textArea.style.position = "fixed";
+            textArea.style.left = "-9999px";
+            document.body.appendChild(textArea);
+            textArea.focus();
+            textArea.select();
+
+            try {
+                document.execCommand('copy');
+                showToast("¡Cita Copiada en APA 7!", `Referencia bibliográfica de ${thesis.author.split(',')[0]} guardada en el portapapeles.`);
+            } catch (err) {
+                console.error("Error al copiar cita: ", err);
+                showToast("Error", "No se pudo copiar la cita automáticamente.");
+            }
+
+            document.body.removeChild(textArea);
+        }
+
+        // Mostrar Notificación Flotante (Toast)
+        function showToast(title, message) {
+            const toast = document.getElementById('toast');
+            const toastTitle = document.getElementById('toastTitle');
+            const toastMessage = document.getElementById('toastMessage');
+
+            toastTitle.textContent = title;
+            toastMessage.textContent = message;
+
+            // Mostrar toast
+            toast.classList.remove('translate-y-20', 'opacity-0');
+            toast.classList.add('translate-y-0', 'opacity-100');
+
+            // Ocultar tras 3.5 segundos
+            setTimeout(() => {
+                toast.classList.remove('translate-y-0', 'opacity-100');
+                toast.classList.add('translate-y-20', 'opacity-0');
+            }, 3500);
+        }
+    </script>
+</body>
+</html>
